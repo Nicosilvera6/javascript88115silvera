@@ -8,20 +8,20 @@ let descuentos = JSON.parse(localStorage.getItem("descuentos")) || [];
 // Funciones
 function calcularPrecioFinal(precio, descuento) {
   return precio - (precio * descuento / 100);
-};
+}
 
 function guardarLocalStorage() {
   localStorage.setItem("productos", JSON.stringify(productos));
   localStorage.setItem("precios", JSON.stringify(precios));
   localStorage.setItem("descuentos", JSON.stringify(descuentos));
-};
+}
 
 function agregarProducto(nombre, precio, descuento) {
   productos.push(nombre);
   precios.push(precio);
   descuentos.push(descuento);
   guardarLocalStorage();
-};
+}
 
 function crearListaProductos() {
   const lista = document.createElement("ul");
@@ -31,10 +31,20 @@ function crearListaProductos() {
     lista.appendChild(li);
   });
   return lista;
-};
+}
+
+function limpiarElemento(elemento) {
+  while (elemento.firstChild) {
+    elemento.removeChild(elemento.firstChild);
+  }
+}
 
 function mostrarQuitarProducto(contenedor) {
-  contenedor.innerHTML = "<h3>Seleccione un producto a eliminar:</h3>";
+  limpiarElemento(contenedor);
+
+  const titulo = document.createElement("h3");
+  titulo.textContent = "Seleccione un producto a eliminar:";
+  contenedor.appendChild(titulo);
 
   productos.forEach((prod, index) => {
     const btn = document.createElement("button");
@@ -50,7 +60,7 @@ function mostrarQuitarProducto(contenedor) {
 
     contenedor.appendChild(btn);
   });
-};
+}
 
 const loginSection = document.createElement("section");
 loginSection.id = "loginSection";
@@ -87,7 +97,7 @@ tituloLogin.textContent = "Ingreso a la Tienda Online";
 loginForm.append(usuarioInput, contrasenaInput, loginBtn);
 loginSection.append(tituloLogin, loginForm, loginMensaje);
 
-//acciones
+//Acciones
 const verProductosBtn = document.createElement("button");
 verProductosBtn.textContent = "Ver productos";
 
@@ -114,7 +124,7 @@ accionesSection.append(
   resultadoDiv
 );
 
-//agregar producto
+//Agregar Producto
 const formAgregarProducto = document.createElement("form");
 const nuevoNombreInput = document.createElement("input");
 nuevoNombreInput.placeholder = "Nombre del producto";
@@ -137,7 +147,7 @@ guardarProductoBtn.textContent = "Guardar";
 formAgregarProducto.append(nuevoNombreInput, nuevoPrecioInput, nuevoDescuentoInput, guardarProductoBtn);
 formAgregarProducto.style.display = "none";
 
-// Eventos
+//Eventos
 loginForm.addEventListener("submit", (evento) => {
   evento.preventDefault();
   const usuario = usuarioInput.value.trim();
@@ -153,25 +163,34 @@ loginForm.addEventListener("submit", (evento) => {
 });
 
 verProductosBtn.addEventListener("click", () => {
-  resultadoDiv.innerHTML = "<h3>Selecciona un producto:</h3>";
+  limpiarElemento(resultadoDiv);
+
+  const titulo = document.createElement("h3");
+  titulo.textContent = "Selecciona un producto:";
+  resultadoDiv.appendChild(titulo);
+
   productos.forEach((prod, index) => {
     const btn = document.createElement("button");
     btn.textContent = prod;
     btn.addEventListener("click", () => {
-      const precioFinal = calcularPrecioFinal(precios[index], descuentos[index]);
-      resultadoDiv.innerHTML = `<p>El precio final de <b>${prod}</b> es: $${precioFinal}</p>`;
+      limpiarElemento(resultadoDiv);
+
+      const p = document.createElement("p");
+      p.innerHTML = `El precio final de <b>${prod}</b> es: $${calcularPrecioFinal(precios[index], descuentos[index])}`;
+      resultadoDiv.appendChild(p);
     });
     resultadoDiv.appendChild(btn);
   });
+
   formAgregarProducto.style.display = "none";
 });
 
 mostrarFormAgregarBtn.addEventListener("click", () => {
   if (!accionesSection.contains(formAgregarProducto)) {
     accionesSection.appendChild(formAgregarProducto);
-  };
+  }
   formAgregarProducto.style.display = "block";
-  resultadoDiv.innerHTML = "";
+  limpiarElemento(resultadoDiv);
 });
 
 formAgregarProducto.addEventListener("submit", (evento) => {
@@ -180,25 +199,36 @@ formAgregarProducto.addEventListener("submit", (evento) => {
   const precio = parseFloat(nuevoPrecioInput.value);
   const descuento = parseFloat(nuevoDescuentoInput.value);
 
+  limpiarElemento(resultadoDiv);
+
+  const p = document.createElement("p");
+
   if (nombre && !isNaN(precio) && !isNaN(descuento)) {
     agregarProducto(nombre, precio, descuento);
-    resultadoDiv.innerHTML = `<p>Producto agregado: ${nombre}</p>`;
+    p.textContent = `Producto agregado: ${nombre}`;
     formAgregarProducto.reset();
     formAgregarProducto.style.display = "none";
   } else {
-    resultadoDiv.innerHTML = `<p>Datos inválidos</p>`;
-  };
+    p.textContent = "Datos inválidos";
+  }
+
+  resultadoDiv.appendChild(p);
 });
 
 listarProductosBtn.addEventListener("click", () => {
-  resultadoDiv.innerHTML = "<h3>Lista de productos</h3>";
+  limpiarElemento(resultadoDiv);
+
+  const titulo = document.createElement("h3");
+  titulo.textContent = "Lista de productos";
+  resultadoDiv.appendChild(titulo);
+
   resultadoDiv.appendChild(crearListaProductos());
-  formAgregarProducto.style.display = "none"; 
+  formAgregarProducto.style.display = "none";
 });
 
 quitarProductoBtn.addEventListener("click", () => {
   mostrarQuitarProducto(resultadoDiv);
-  formAgregarProducto.style.display = "none"; 
+  formAgregarProducto.style.display = "none";
 });
 
 salirBtn.addEventListener("click", () => {
@@ -207,6 +237,6 @@ salirBtn.addEventListener("click", () => {
   usuarioInput.value = "";
   contrasenaInput.value = "";
   loginMensaje.textContent = "";
-  resultadoDiv.innerHTML = "";
+  limpiarElemento(resultadoDiv);
   formAgregarProducto.style.display = "none";
 });
