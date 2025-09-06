@@ -3,11 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TIENDA ONLINE</title>
+  <title>MANISS CALZADOS</title>
+  <!--ESTILOS TOASTIFY-->
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  <!--CSS-->
   <link rel="stylesheet" href="css/style.css">
+  <!--JS-->
   <script defer src="js/main.js"></script>
+  <script defer src="js/carrito.js"></script>  
 </head>
 <body>
-  <div id="tienda"></div> 
+  <!--NAVEGACION PRINCIPAL-->
+  <div class="nav-container">
+    <nav class="navbar">
+      <h1 class="navbar-logo">TU TIENDA DE CALZADOS</h1>
+      <h1 class="ver-carrito" id="verCarrito"> Carrito 🛒</h1>
+    </nav>
+  </div> 
+  <div class = "banner">
+    <div class="banner-container">
+      <h1>MANISS CALZADOS</h1>
+    </div>
+  <!--CONTENEDOR DONDE SE MOSTRARA LAS PRODUCTOS-->
+  <div id="tienda" class = "tienda-contenido"></div>  
+    <!--CONTENEDOR PARA MODAL DEL CARRITO-->
+  <div id="modal-container" class = "modal-container"></div>
+  <!--DETALLE DE LA COMPRA-->
+  <div id="detalle-compra">
+  </div>
+  <!--TOASTIFY-->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <!-- SWEETALERT-->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>

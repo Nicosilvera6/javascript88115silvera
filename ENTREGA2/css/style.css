@@ -1,88 +1,181 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+.body {
+  margin: 0px;
 }
 
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f9f9f9;
-  padding: 20px;
-  color: #333;
+.nav-container {
+  position: sticky;
+  z-index: 3;
+  top: 0;
 }
 
 
-section {
-  margin-bottom: 20px;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background-color: #fff;
-}
-
-
-form {
+.navbar {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 10px;
+  justify-content: space-between;
+  height: 12vh;
+  background-color: #1b1b1b;
 }
 
-input {
-  padding: 8px;
-  border: 1px solid #aaa;
-  border-radius: 4px;
-  font-size: 16px;
+.navbar-logo {
+ justify-self: start;
+ margin-left: 20px;
+ color: #fff;
+ margin-top: 4vh;
+ cursor: pointer;
+text-shadow: 1px 1px 3px rgb(245, 237, 237);
 }
 
-button {
-  padding: 10px;
-  background-color: #c90b0b;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
+.ver-carrito {
+  font-size: 25px;
+  margin-right: 20px;
+  margin-top: 3.5vh;
   cursor: pointer;
-  font-size: 16px;
-  margin:10px;
+  text-shadow: 1px 1px 3px rgb(245, 237, 237);
+   color: #fff;
 }
 
-button:hover {
-  background-color: #0056b3;
+.banner{
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  background-image: linear-gradient(rgba(0, 28, 151, 0.938),rgba(255, 4, 4, 0.4)), 
+  url("https://tse1.mm.bing.net/th/id/OIP.6VVO4oqgTVfNQ9yIIT-NxAHaIM?r=0&cb=ucfimg2ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3");
 }
 
 
-p {
-  margin-top: 10px;
+.banner-container {
+ text-align: center;
+ padding: 15% 0;
+}
+
+
+.banner h1 {
+  margin: 0;
+  color: rgb(246, 247, 245);
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+  font-size: 62px;
   font-weight: bold;
 }
 
 
-#resultado {
-  margin-top: 20px;
+.banner p {
+  font-size: 15px;
+  color: rgb(3, 0, 9);
+  opacity: 0.7;
+  text-shadow: 1px 1 px 3 px rgba(0,0,0,0.2);
 }
 
+.tienda-contenido {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin-top: 30px;
+  margin-left: 80px;
+  margin-right: 80px;
+} 
 
-ul {
-  list-style: none;
-  margin-top: 10px;
+.card {
+  box-shadow: 0 4px 8px 0 rgb(243, 234, 234);
+  max-width: 300px;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
 }
 
-ul li {
-  padding: 5px 0;
-  border-bottom: 1px solid #eee;
+.card > img {
+  width: 90%;
+  height: 250px;
 }
 
+.precio {
+  color: rgb(12, 0, 0);
+  font-size: 15px;
+}
 
-#resultado button {
-  display: block;
-  margin: 5px 0;
+.cardbutton {
+  border: none;
+  outline: 0;
+  padding: 12px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+}
+
+.cardimg {
+  width: 90%;
+  height: 250px;
+}
+
+.modal-container {
+  width: 80%;
+  margin: 0 10%;
+  max-height: 88vh;
+  color: #fff;
+  background-color: #d66b6bb7;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  overflow: auto;
+  z-index: 9;
+  top: 12vh;
+  scrollbar-color: none;
+}
+
+.modal.container::-webkit-scrollbar {
+  display: none;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-around;
+  background-color: #0a0909;
+  color: white;
   width: 100%;
 }
 
-#tienda {
-  max-width: 800px;
-  margin: auto;
+.modal-header-title {
+  justify-self: start;
+}
+
+.modal-header-button {
+  cursor: pointer;
+}
+
+
+.modal-container > .modal-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 70%;
+  margin: 10px;
+}
+
+.modal-container > div >img {
+  height: 120px;
+  width: 120px;
+}
+
+.total-content {
+  font-size: 25px;
   padding: 20px;
-  background: white;
-  border-radius: 8px;
+  text-align: center;
+  padding-top: 20px;
+}
+
+.hidden {
+  display: none;
+}
+
+.eliminar-producto {
+  cursor: pointer;
+}
+
+.calendar {
+  display: flex;
+  align-items: start;
 }

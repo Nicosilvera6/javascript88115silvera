@@ -1,0 +1,12 @@
+[
+  { "id": 1, "nombre": "New Balance 550", "precio": 2500, "img":"https://f.fcdn.app/imgs/4a6a2d/www.newbalance.com.uy/nbaluy/2fa4/original/catalogo/BBW550TA_1376_1/1500-1500/championes-new-balance-de-dama-550-bbw550ta-sea-salt.jpg"},
+  { "id": 2, "nombre": "Vans Knu school", "precio": 2900, "img":"https://tse1.mm.bing.net/th/id/OIP.vuEYLFkuhDMnsVD9SVmTigHaHa?r=0&cb=ucfimg2ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3"},
+  { "id": 3, "nombre": "Vans knu plataforma", "precio": 3500,  "img":"https://magicfeet.vtexassets.com/arquivos/ids/253396/CP66B-T-001-3-MF-1000x1000.jpg?v=638778316697230000"},
+  { "id": 4, "nombre": "Nike Jordan 1", "precio": 3990, "img":"https://www.sportline.cr/media/catalog/product/5/5/553558-161_phsrh000-1000.png?optimize=medium&bg-color=255,255,255&fit=bounds&height=&width=&canvas=:&format=jpeg"},
+  { "id": 5, "nombre": "Nike dunk low", "precio": 2900, "img":"https://www.solebystyle.com/cdn/shop/files/NikeDunkLowVintagePanda_Women_s_copy_grande.jpg?v=1721935033"},
+  { "id": 6, "nombre": "Nike Air Force 1", "precio": 4500,  "img":"https://f.fcdn.app/imgs/2a04b2/www.lacancha.uy/lcanuy/9e8c/webp/catalogo/8137_blanco_1/800x800/championes-air-force-1-bg-de-ninos-blanco.jpg"},
+  { "id": 7, "nombre": "Jordan 4", "precio": 5000,  "img":"https://f.fcdn.app/imgs/e67843/www.zooko.com.uy/zoo/e559/original/catalogo/NKAQ9129-001-1/460x460/air-jordan-4-retro-black.jpg"},
+  { "id": 8, "nombre": "Adidas Samba", "precio": 3500,  "img":"https://f.fcdn.app/imgs/70c8d7/www.zooko.com.uy/zoo/6341/original/catalogo/ADIE3100-4237-1/1920-1200/adidas-samba-adv-core-black-cloud-white-gum.jpg"},
+  { "id": 9, "nombre": "Adidas Forum", "precio": 3900,  "img":"https://f.fcdn.app/imgs/cd3553/www.macrilife.uy/masluy/7b1e/original/catalogo/IH7929_149711_1/2000-2000/championes-adidas-forum-low-cl-c-de-ninos-ih7929-blanco-negro.jpg"},
+  { "id": 10, "nombre": "Vans Old School", "precio": 2000,  "img":"https://f.fcdn.app/imgs/0087ae/laisla.com.uy/isl/22e1/original/catalogo/0D3HY280D3HY281/2000-2000/championes-vans-old-skool-negro-championes-vans-old-skool-negro.jpg"}
+]

@@ -1,242 +1,66 @@
-const usuarioCorrecto = "admin";
-const contrasenaCorrecta = "1234";
+//Elementos del DOM
+const tienda = document.getElementById("tienda")
+const verCarrito = document.getElementById("verCarrito")
+const modalContainer = document.getElementById("modal-container")
 
-let productos = JSON.parse(localStorage.getItem("productos")) || [];
-let precios = JSON.parse(localStorage.getItem("precios")) || [];
-let descuentos = JSON.parse(localStorage.getItem("descuentos")) || [];
+let carrito = JSON.parse(localStorage.getItem("carrito")) || [];  // Inicializo el carrito
 
-// Funciones
-function calcularPrecioFinal(precio, descuento) {
-  return precio - (precio * descuento / 100);
-}
 
-function guardarLocalStorage() {
-  localStorage.setItem("productos", JSON.stringify(productos));
-  localStorage.setItem("precios", JSON.stringify(precios));
-  localStorage.setItem("descuentos", JSON.stringify(descuentos));
-}
+async function cargarProductos() { //Cargo productos desde el archivo productos.JSON
+  try {
+    const response = await fetch('data/productos.json'); //
+    if (!response.ok) throw new Error('Error al cargar productos');
+    const productos = await response.json();
 
-function agregarProducto(nombre, precio, descuento) {
-  productos.push(nombre);
-  precios.push(precio);
-  descuentos.push(descuento);
-  guardarLocalStorage();
-}
 
-function crearListaProductos() {
-  const lista = document.createElement("ul");
-  productos.forEach((producto, index) => {
-    const li = document.createElement("li");
-    li.textContent = `${producto} - $${precios[index]} (${descuentos[index]}% descuento)`;
-    lista.appendChild(li);
-  });
-  return lista;
-}
+  productos.forEach((producto) => { //recorro los productos y los muestro en la pagina
+  let content = document.createElement("div");
+  content.className = "card";// creo la clase card para cada producto
+  content.innerHTML =`
+  <img src ="${producto.img}">
+  <h3>${producto.nombre}</h3>
+  <p class="precio">${producto.precio} $</p>
+  `;
 
-function limpiarElemento(elemento) {
-  while (elemento.firstChild) {
-    elemento.removeChild(elemento.firstChild);
-  }
-}
+  tienda.appendChild(content);
 
-function mostrarQuitarProducto(contenedor) {
-  limpiarElemento(contenedor);
+  let comprar = document.createElement("button")
 
-  const titulo = document.createElement("h3");
-  titulo.textContent = "Seleccione un producto a eliminar:";
-  contenedor.appendChild(titulo);
+  comprar.innerText = "Comprar";
+  comprar.className = "comprar";
 
-  productos.forEach((prod, index) => {
-    const btn = document.createElement("button");
-    btn.textContent = prod;
+  content.appendChild(comprar);
 
-    btn.addEventListener("click", () => {
-      productos.splice(index, 1);
-      precios.splice(index, 1);
-      descuentos.splice(index, 1);
-      guardarLocalStorage();
-      mostrarQuitarProducto(contenedor);
+  comprar.addEventListener("click", () =>{ //agrego el producto al carrito
+    const existe = carrito.find((item) => item.id === producto.id);// busco si el producto ya existe en el carrito 
+     if (existe) {
+      existe.cantidad++; //si existe aumentamos cantidad 
+    } else {
+      carrito.push({//si no existe lo agregamos
+      id : producto.id,
+      nombre : producto.nombre,
+      precio : producto.precio,
+      cantidad: 1,
     });
+  }
+  localStorage.setItem("carrito", JSON.stringify(carrito)); //guardo el carrito en el localstorage
 
-    contenedor.appendChild(btn);
+      Toastify({ //  muestro mensaje de producto agregado al carrito una vez seleccionamos en comprar
+    text: `${producto.nombre} agregado al carrito 🛒`,
+    duration: 3000, 
+    gravity: "bottom", 
+    position: "right", 
+    backgroundColor: "linear-gradient(to right, #0356dcff, #05ddedff)",
+  }).showToast();
+
   });
+});
+    
+  }catch (error) { //si el archivo no tiene la ruta correcta o no existe damos un mensaje PAGINA EN MANTENIMIENTO
+    Swal.fire("PAGINA EN MANTENIMIENTO");
+  }
 }
+cargarProductos();
+  
 
-const loginSection = document.createElement("section");
-loginSection.id = "loginSection";
 
-const accionesSection = document.createElement("section");
-accionesSection.id = "accionesSection";
-accionesSection.style.display = "none";
-
-const app = document.getElementById("tienda");
-app.appendChild(loginSection);
-app.appendChild(accionesSection);
-
-//Login
-const loginForm = document.createElement("form");
-const usuarioInput = document.createElement("input");
-usuarioInput.type = "text";
-usuarioInput.placeholder = "Usuario";
-usuarioInput.required = true;
-
-const contrasenaInput = document.createElement("input");
-contrasenaInput.type = "password";
-contrasenaInput.placeholder = "Contraseña";
-contrasenaInput.required = true;
-
-const loginBtn = document.createElement("button");
-loginBtn.type = "submit";
-loginBtn.textContent = "Ingresar";
-
-const loginMensaje = document.createElement("p");
-
-const tituloLogin = document.createElement("h2");
-tituloLogin.textContent = "Ingreso a la Tienda Online";
-
-loginForm.append(usuarioInput, contrasenaInput, loginBtn);
-loginSection.append(tituloLogin, loginForm, loginMensaje);
-
-//Acciones
-const verProductosBtn = document.createElement("button");
-verProductosBtn.textContent = "Ver productos";
-
-const mostrarFormAgregarBtn = document.createElement("button");
-mostrarFormAgregarBtn.textContent = "Agregar producto";
-
-const listarProductosBtn = document.createElement("button");
-listarProductosBtn.textContent = "Detalle Producto";
-
-const quitarProductoBtn = document.createElement("button");
-quitarProductoBtn.textContent = "Quitar producto";
-
-const salirBtn = document.createElement("button");
-salirBtn.textContent = "Salir";
-
-const resultadoDiv = document.createElement("div");
-
-accionesSection.append(
-  verProductosBtn,
-  mostrarFormAgregarBtn,
-  listarProductosBtn,
-  quitarProductoBtn,
-  salirBtn,
-  resultadoDiv
-);
-
-//Agregar Producto
-const formAgregarProducto = document.createElement("form");
-const nuevoNombreInput = document.createElement("input");
-nuevoNombreInput.placeholder = "Nombre del producto";
-nuevoNombreInput.required = true;
-
-const nuevoPrecioInput = document.createElement("input");
-nuevoPrecioInput.placeholder = "Precio";
-nuevoPrecioInput.type = "number";
-nuevoPrecioInput.required = true;
-
-const nuevoDescuentoInput = document.createElement("input");
-nuevoDescuentoInput.placeholder = "Descuento (%)";
-nuevoDescuentoInput.type = "number";
-nuevoDescuentoInput.required = true;
-
-const guardarProductoBtn = document.createElement("button");
-guardarProductoBtn.type = "submit";
-guardarProductoBtn.textContent = "Guardar";
-
-formAgregarProducto.append(nuevoNombreInput, nuevoPrecioInput, nuevoDescuentoInput, guardarProductoBtn);
-formAgregarProducto.style.display = "none";
-
-//Eventos
-loginForm.addEventListener("submit", (evento) => {
-  evento.preventDefault();
-  const usuario = usuarioInput.value.trim();
-  const contrasena = contrasenaInput.value.trim();
-
-  if (usuario === usuarioCorrecto && contrasena === contrasenaCorrecta) {
-    loginMensaje.textContent = "Login exitoso";
-    loginSection.style.display = "none";
-    accionesSection.style.display = "block";
-  } else {
-    loginMensaje.textContent = "Usuario o contraseña incorrectos";
-  }
-});
-
-verProductosBtn.addEventListener("click", () => {
-  limpiarElemento(resultadoDiv);
-
-  const titulo = document.createElement("h3");
-  titulo.textContent = "Selecciona un producto:";
-  resultadoDiv.appendChild(titulo);
-
-  productos.forEach((prod, index) => {
-    const btn = document.createElement("button");
-    btn.textContent = prod;
-    btn.addEventListener("click", () => {
-      limpiarElemento(resultadoDiv);
-
-      const p = document.createElement("p");
-      p.innerHTML = `El precio final de <b>${prod}</b> es: $${calcularPrecioFinal(precios[index], descuentos[index])}`;
-      resultadoDiv.appendChild(p);
-    });
-    resultadoDiv.appendChild(btn);
-  });
-
-  formAgregarProducto.style.display = "none";
-});
-
-mostrarFormAgregarBtn.addEventListener("click", () => {
-  if (!accionesSection.contains(formAgregarProducto)) {
-    accionesSection.appendChild(formAgregarProducto);
-  }
-  formAgregarProducto.style.display = "block";
-  limpiarElemento(resultadoDiv);
-});
-
-formAgregarProducto.addEventListener("submit", (evento) => {
-  evento.preventDefault();
-  const nombre = nuevoNombreInput.value.trim();
-  const precio = parseFloat(nuevoPrecioInput.value);
-  const descuento = parseFloat(nuevoDescuentoInput.value);
-
-  limpiarElemento(resultadoDiv);
-
-  const p = document.createElement("p");
-
-  if (nombre && !isNaN(precio) && !isNaN(descuento)) {
-    agregarProducto(nombre, precio, descuento);
-    p.textContent = `Producto agregado: ${nombre}`;
-    formAgregarProducto.reset();
-    formAgregarProducto.style.display = "none";
-  } else {
-    p.textContent = "Datos inválidos";
-  }
-
-  resultadoDiv.appendChild(p);
-});
-
-listarProductosBtn.addEventListener("click", () => {
-  limpiarElemento(resultadoDiv);
-
-  const titulo = document.createElement("h3");
-  titulo.textContent = "Lista de productos";
-  resultadoDiv.appendChild(titulo);
-
-  resultadoDiv.appendChild(crearListaProductos());
-  formAgregarProducto.style.display = "none";
-});
-
-quitarProductoBtn.addEventListener("click", () => {
-  mostrarQuitarProducto(resultadoDiv);
-  formAgregarProducto.style.display = "none";
-});
-
-salirBtn.addEventListener("click", () => {
-  accionesSection.style.display = "none";
-  loginSection.style.display = "block";
-  usuarioInput.value = "";
-  contrasenaInput.value = "";
-  loginMensaje.textContent = "";
-  limpiarElemento(resultadoDiv);
-  formAgregarProducto.style.display = "none";
-});
